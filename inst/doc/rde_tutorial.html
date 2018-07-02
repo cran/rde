@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<meta name="author" content="Stefan Kloppenborg" />
+
+<meta name="date" content="2018-07-01" />
+
+<title>rde Tutorial</title>
+
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+
+
+<link href="data:text/css;charset=utf-8,body%20%7B%0Abackground%2Dcolor%3A%20%23fff%3B%0Amargin%3A%201em%20auto%3B%0Amax%2Dwidth%3A%20700px%3B%0Aoverflow%3A%20visible%3B%0Apadding%2Dleft%3A%202em%3B%0Apadding%2Dright%3A%202em%3B%0Afont%2Dfamily%3A%20%22Open%20Sans%22%2C%20%22Helvetica%20Neue%22%2C%20Helvetica%2C%20Arial%2C%20sans%2Dserif%3B%0Afont%2Dsize%3A%2014px%3B%0Aline%2Dheight%3A%201%2E35%3B%0A%7D%0A%23header%20%7B%0Atext%2Dalign%3A%20center%3B%0A%7D%0A%23TOC%20%7B%0Aclear%3A%20both%3B%0Amargin%3A%200%200%2010px%2010px%3B%0Apadding%3A%204px%3B%0Awidth%3A%20400px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Aborder%2Dradius%3A%205px%3B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Afont%2Dsize%3A%2013px%3B%0Aline%2Dheight%3A%201%2E3%3B%0A%7D%0A%23TOC%20%2Etoctitle%20%7B%0Afont%2Dweight%3A%20bold%3B%0Afont%2Dsize%3A%2015px%3B%0Amargin%2Dleft%3A%205px%3B%0A%7D%0A%23TOC%20ul%20%7B%0Apadding%2Dleft%3A%2040px%3B%0Amargin%2Dleft%3A%20%2D1%2E5em%3B%0Amargin%2Dtop%3A%205px%3B%0Amargin%2Dbottom%3A%205px%3B%0A%7D%0A%23TOC%20ul%20ul%20%7B%0Amargin%2Dleft%3A%20%2D2em%3B%0A%7D%0A%23TOC%20li%20%7B%0Aline%2Dheight%3A%2016px%3B%0A%7D%0Atable%20%7B%0Amargin%3A%201em%20auto%3B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dcolor%3A%20%23DDDDDD%3B%0Aborder%2Dstyle%3A%20outset%3B%0Aborder%2Dcollapse%3A%20collapse%3B%0A%7D%0Atable%20th%20%7B%0Aborder%2Dwidth%3A%202px%3B%0Apadding%3A%205px%3B%0Aborder%2Dstyle%3A%20inset%3B%0A%7D%0Atable%20td%20%7B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dstyle%3A%20inset%3B%0Aline%2Dheight%3A%2018px%3B%0Apadding%3A%205px%205px%3B%0A%7D%0Atable%2C%20table%20th%2C%20table%20td%20%7B%0Aborder%2Dleft%2Dstyle%3A%20none%3B%0Aborder%2Dright%2Dstyle%3A%20none%3B%0A%7D%0Atable%20thead%2C%20table%20tr%2Eeven%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Ap%20%7B%0Amargin%3A%200%2E5em%200%3B%0A%7D%0Ablockquote%20%7B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Apadding%3A%200%2E25em%200%2E75em%3B%0A%7D%0Ahr%20%7B%0Aborder%2Dstyle%3A%20solid%3B%0Aborder%3A%20none%3B%0Aborder%2Dtop%3A%201px%20solid%20%23777%3B%0Amargin%3A%2028px%200%3B%0A%7D%0Adl%20%7B%0Amargin%2Dleft%3A%200%3B%0A%7D%0Adl%20dd%20%7B%0Amargin%2Dbottom%3A%2013px%3B%0Amargin%2Dleft%3A%2013px%3B%0A%7D%0Adl%20dt%20%7B%0Afont%2Dweight%3A%20bold%3B%0A%7D%0Aul%20%7B%0Amargin%2Dtop%3A%200%3B%0A%7D%0Aul%20li%20%7B%0Alist%2Dstyle%3A%20circle%20outside%3B%0A%7D%0Aul%20ul%20%7B%0Amargin%2Dbottom%3A%200%3B%0A%7D%0Apre%2C%20code%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0Aborder%2Dradius%3A%203px%3B%0Acolor%3A%20%23333%3B%0Awhite%2Dspace%3A%20pre%2Dwrap%3B%20%0A%7D%0Apre%20%7B%0Aborder%2Dradius%3A%203px%3B%0Amargin%3A%205px%200px%2010px%200px%3B%0Apadding%3A%2010px%3B%0A%7D%0Apre%3Anot%28%5Bclass%5D%29%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Acode%20%7B%0Afont%2Dfamily%3A%20Consolas%2C%20Monaco%2C%20%27Courier%20New%27%2C%20monospace%3B%0Afont%2Dsize%3A%2085%25%3B%0A%7D%0Ap%20%3E%20code%2C%20li%20%3E%20code%20%7B%0Apadding%3A%202px%200px%3B%0A%7D%0Adiv%2Efigure%20%7B%0Atext%2Dalign%3A%20center%3B%0A%7D%0Aimg%20%7B%0Abackground%2Dcolor%3A%20%23FFFFFF%3B%0Apadding%3A%202px%3B%0Aborder%3A%201px%20solid%20%23DDDDDD%3B%0Aborder%2Dradius%3A%203px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Amargin%3A%200%205px%3B%0A%7D%0Ah1%20%7B%0Amargin%2Dtop%3A%200%3B%0Afont%2Dsize%3A%2035px%3B%0Aline%2Dheight%3A%2040px%3B%0A%7D%0Ah2%20%7B%0Aborder%2Dbottom%3A%204px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Apadding%2Dbottom%3A%202px%3B%0Afont%2Dsize%3A%20145%25%3B%0A%7D%0Ah3%20%7B%0Aborder%2Dbottom%3A%202px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Afont%2Dsize%3A%20120%25%3B%0A%7D%0Ah4%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23f7f7f7%3B%0Amargin%2Dleft%3A%208px%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Ah5%2C%20h6%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23ccc%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Aa%20%7B%0Acolor%3A%20%230033dd%3B%0Atext%2Ddecoration%3A%20none%3B%0A%7D%0Aa%3Ahover%20%7B%0Acolor%3A%20%236666ff%3B%20%7D%0Aa%3Avisited%20%7B%0Acolor%3A%20%23800080%3B%20%7D%0Aa%3Avisited%3Ahover%20%7B%0Acolor%3A%20%23BB00BB%3B%20%7D%0Aa%5Bhref%5E%3D%22http%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0Aa%5Bhref%5E%3D%22https%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0A%0Acode%20%3E%20span%2Ekw%20%7B%20color%3A%20%23555%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Edt%20%7B%20color%3A%20%23902000%3B%20%7D%20%0Acode%20%3E%20span%2Edv%20%7B%20color%3A%20%2340a070%3B%20%7D%20%0Acode%20%3E%20span%2Ebn%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Efl%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Ech%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Est%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Eco%20%7B%20color%3A%20%23888888%3B%20font%2Dstyle%3A%20italic%3B%20%7D%20%0Acode%20%3E%20span%2Eot%20%7B%20color%3A%20%23007020%3B%20%7D%20%0Acode%20%3E%20span%2Eal%20%7B%20color%3A%20%23ff0000%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Efu%20%7B%20color%3A%20%23900%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%20code%20%3E%20span%2Eer%20%7B%20color%3A%20%23a61717%3B%20background%2Dcolor%3A%20%23e3d2d2%3B%20%7D%20%0A" rel="stylesheet" type="text/css" />
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">rde Tutorial</h1>
+<h4 class="author"><em>Stefan Kloppenborg</em></h4>
+<h4 class="date"><em>2018-07-01</em></h4>
+
+
+
+<p>When sharing R Notebooks with others, it’s not uncommon for the notebook to reference data that is only available on your machine. It could be that the recipient does not have access to a certain database, or it could be as simple as you forgetting to email them a CSV file with the data. In either of these cases, the analysis in the notebook is not self-contained. The package <code>rde</code> solves this problem by allowing you to embed the data directly in the notebook.</p>
+<p>If you’re running on an X11 system (i.e. Linux, or similar), please read the section on configuring the clipboard below before proceeding.</p>
+<p>Let’s take an example. Let’s say that we have a spreadsheet of populations of the ten most populous countries (data originally taken from <span class="citation">[1]</span>). Somewhere near the top of our R Notebook, we have a code chunk that looks like the following:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fname &lt;-<span class="st"> &quot;country_pop.csv&quot;</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pop.data &lt;-<span class="st"> </span><span class="kw">read.csv</span>(fname, <span class="dt">stringsAsFactors =</span> <span class="ot">FALSE</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">kable</span>(pop.data)</code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Country</th>
+<th align="right">Population</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">China</td>
+<td align="right">1384688986</td>
+</tr>
+<tr class="even">
+<td align="left">India</td>
+<td align="right">1296834042</td>
+</tr>
+<tr class="odd">
+<td align="left">United States</td>
+<td align="right">329256465</td>
+</tr>
+<tr class="even">
+<td align="left">Indonesia</td>
+<td align="right">262787403</td>
+</tr>
+<tr class="odd">
+<td align="left">Brazil</td>
+<td align="right">208846892</td>
+</tr>
+<tr class="even">
+<td align="left">Pakistan</td>
+<td align="right">207862518</td>
+</tr>
+<tr class="odd">
+<td align="left">Nigeria</td>
+<td align="right">195300343</td>
+</tr>
+<tr class="even">
+<td align="left">Bangladesh</td>
+<td align="right">159453001</td>
+</tr>
+<tr class="odd">
+<td align="left">Russia</td>
+<td align="right">142122776</td>
+</tr>
+<tr class="even">
+<td align="left">Japan</td>
+<td align="right">126168156</td>
+</tr>
+</tbody>
+</table>
+<p>Now, if you send your notebook to someone else and don’t send along the file <code>country_pop.csv</code>, that person can look at your notebook, but they won’t be able to re-run it.</p>
+<p>If you want to include the data directly in the notebook, you can use <code>rde</code> to do so.</p>
+<p><code>rde</code> provides two functions: <code>load_rde_var</code> and <code>copy_rde_var</code>. You’ll use <code>load_rde_var</code> in your notebook, and you’ll use <code>copy_rde_var</code> to create one of the arguments that <code>load_rde_var</code> needs.</p>
+<p>The function <code>load_rde_var</code> takes three arguments. The first argument is a boolean (we’ll come back to this). The second argument is <code>load.fcn</code>. This is a piece of code that loads data from a source of your choosing (a CSV file, a database, etc.). This is the code that needs to work on your computer; it does not need to work on the computer of the notebook recipient. The third argument is <code>cache</code>. This argument is an encoded copy of the data.</p>
+<p>When you call <code>load_rde_var</code>, the function will first try to load the data using the code in the <code>load.fcn</code> argument. If this fails, it will fall back on using the <code>cache</code>. In the latter case, it will give you a message to say that it used the cache instead of loading new data. This is what the recipient of your notebook would see if you neglected to send them the data file.</p>
+<p>If <code>load_rde_var</code> succeeds in loading the data using the code in <code>load.fcn</code>, it will then compare this data with the data in <code>cache</code>. If there’s a difference, it will give you a warning. If you expected the data to change, you can go ahead and update the third argument (again using <code>copy_rde_var</code>); if you didn’t expect the data to change, well, now you know that it did change.</p>
+<p>Now we’ll come back to that first argument of <code>load_rde_var</code>. This argument is a boolean called <code>use.cache</code>. This allows you to force <code>load_rde_var</code> to load data from the cache instead of running the code in <code>load.fcn</code>. Under most circumstances, this should be <code>FALSE</code>. However, sometimes, it may take a very long time to load your data from its original source (maybe the code executes a very long running database query, or scrapes a million webpages and just gives you a summary statistic). In the case that you don’t want to wait around while you load the data from its original source again, you can set that first argument to <code>TRUE</code> and just use the cached data.</p>
+<p>Continuing on with our example of loading the populations of the ten most populous countries, we would start by wrapping our existing code inside the second argument of <code>load_rde_var</code>. It would now look the this:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(rde)
+
+pop.data &lt;-<span class="st"> </span><span class="kw">load_rde_var</span>(
+  <span class="dt">use.cache =</span> <span class="ot">FALSE</span>,
+  <span class="dt">load.fcn =</span> {
+    <span class="kw">read.csv</span>(fname, <span class="dt">stringsAsFactors =</span> <span class="ot">FALSE</span>)
+  },
+  <span class="dt">cache =</span> <span class="ot">NULL</span>  <span class="co"># We'll fill this in shortly</span>
+)
+<span class="co">#&gt; Cache is empty or not a string</span>
+<span class="co">#&gt; Warning in doTryCatch(return(expr), name, parentenv, handler): Cached data</span>
+<span class="co">#&gt; is different from loaded data</span></code></pre></div>
+<p>If we run that code as is, it will raise a warning. We would expect this since there is nothing in the <code>cache</code> argument, so of course, the result of the <code>load.fcn</code> and <code>cache</code> are different. We’ll need to fill in cache argument of <code>load_rde_var</code>.</p>
+<p>You’d normally start by loading your data into memory as you normally would (the code above would work fine). Once the data <code>pop.data</code> is in memory, you’re going to copy it into the <code>cache</code> argument of <code>load_rde_var</code>. You can use <code>copy_rde_var</code> to do so.</p>
+<p>In the console, you would type:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">copy_rde_var</span>(pop.data)</code></pre></div>
+<p>When you execute this, your clipboard will contain some R code that will recreate the variable. Your clipboard will look like this:</p>
+<pre><code>rde1QlpoOTFBWSZTWQy+/kYAAIB3/v//6EJABRg/WlQv797wYkAAAMQiABBAACAAAZGwANk0RTKejU9T
+RoBoGgGjTRoBoGgaGymE0Kp+qemmkDNQ0YmJk0AA0xNADQNPUaA0JRhDTJoANAAAAAAAAEJx2Eja7QBK
+MKPPkRAx63wSAWt31AABs1zauhwHifs5WlltyIyQKAAAZEAZGQYMIZEA6ZAPHVMEB71jSCqdlsiR/eSY
+kzQkRq5RoXgvNNZnB5RSOvKaTGFtc/SXc74AhzqhMEJvdisEGVfo7UYngc0AwGqTvTHx8CBZTzE9OQZZ
+VY8KAhHAhrG4RCeilM0rXKkdpjGqyNgJwAkmnPQOMYrLlQ4YTIv0WyxfYdkd9WSWUsvggC/i7kinChIB
+l9/IwA==</code></pre>
+<p>You can go ahead and paste that into the <code>cache</code> argument of <code>load_rde_var</code>. Make sure that you paste it inside a pair of quotes. The code at the top of your notebook will now look like the following. Line breaks and spaces within the <code>cahce</code> argument don’t matter, so don’t worry about indenting to make your code pretty.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(rde)
+
+pop.data &lt;-<span class="st"> </span><span class="kw">load_rde_var</span>(
+  <span class="dt">use.cache =</span> <span class="ot">FALSE</span>,
+  <span class="dt">load.fcn =</span> {
+    fname &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;country_pop.csv&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;rde&quot;</span>)
+    <span class="kw">read.csv</span>(fname, <span class="dt">stringsAsFactors =</span> <span class="ot">FALSE</span>)
+  },
+  <span class="dt">cache =</span> <span class="st">&quot;</span>
+<span class="st">    rde1QlpoOTFBWSZTWQy+/kYAAIB3/v//6EJABRg/WlQv797wYkAAAMQiABBAACAAAZGwANk0RTKejU9T</span>
+<span class="st">    RoBoGgGjTRoBoGgaGymE0Kp+qemmkDNQ0YmJk0AA0xNADQNPUaA0JRhDTJoANAAAAAAAAEJx2Eja7QBK</span>
+<span class="st">    MKPPkRAx63wSAWt31AABs1zauhwHifs5WlltyIyQKAAAZEAZGQYMIZEA6ZAPHVMEB71jSCqdlsiR/eSY</span>
+<span class="st">    kzQkRq5RoXgvNNZnB5RSOvKaTGFtc/SXc74AhzqhMEJvdisEGVfo7UYngc0AwGqTvTHx8CBZTzE9OQZZ</span>
+<span class="st">    VY8KAhHAhrG4RCeilM0rXKkdpjGqyNgJwAkmnPQOMYrLlQ4YTIv0WyxfYdkd9WSWUsvggC/i7kinChIB</span>
+<span class="st">    l9/IwA==</span>
+<span class="st">  &quot;</span>
+)</code></pre></div>
+<p>Now, when we run this, it won’t raise a warning because <code>load.fcn</code> and <code>cache</code> are the same.</p>
+<p>If you send this notebook to someone else, but neglect to send the data file, they can now still play around with the data because it’s now directly in the code. They will, however, get a message indicating that the data has been loaded from cache.</p>
+<p>What if you inadvertently change the data file? Or if you’re reading the data from a database that changes? Well, if that happens, <code>load.fcn</code> and <code>cache</code> won’t match. In this case, you’ll get a warning. This can be useful: maybe you didn’t expect the data to change, or maybe you need to update some of the text in your notebook — maybe some of your conclusions or explanation needs to change. Assuming that the change in the data file (or database) isn’t some sort of mistake, make sure that you update the value of the <code>cache</code> argument with the new data (again, you’ll use the <code>copy_rde_var</code> function to do so).</p>
+<div id="installing-on-x11-systems" class="section level1">
+<h1>Installing on X11 Systems</h1>
+<p>If you’re on an X11 system (like Linux), you’ll need to install some additional software. You should not have to do this on Windows or Mac. On X11 systems, you’ll need to install either <code>xsel</code> or <code>xclip</code>. Depending on the distribution that you use, you will probably install it using a command like <code>sudo apt-get install xsel</code></p>
+</div>
+<div id="references" class="section level1 unnumbered">
+<h1>References</h1>
+<div id="refs" class="references">
+<div id="ref-popclock">
+<p>[1] U.S. Census Bureau, “Current Population.” [Online]. Available: <a href="https://www.census.gov/popclock/print.php?component=counter" class="uri">https://www.census.gov/popclock/print.php?component=counter</a>. [Accessed: 13-Mar-2018]</p>
+</div>
+</div>
+</div>
+
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
